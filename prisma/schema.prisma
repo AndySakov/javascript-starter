@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model City {
+  id           Int           @id @default(autoincrement())
+  name         String
+  latitude     Float
+  longitude    Float
+  temperatures Temperature[]
+  webhooks     Webhook[]
+
+  @@map("cities")
+}
+
+model Temperature {
+  id        Int      @id @default(autoincrement())
+  min       Int
+  max       Int
+  city      City     @relation(fields: [city_id], references: [id])
+  city_id   Int
+  timestamp DateTime @default(now())
+
+  @@map("temperatures")
+}
+
+model Webhook {
+  id           Int    @id @default(autoincrement())
+  city         City   @relation(fields: [city_id], references: [id])
+  city_id      Int
+  callback_url String
+
+  @@map("webhooks")
+}
