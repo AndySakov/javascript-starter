@@ -30,7 +30,6 @@ export class TemperatureService {
         },
       },
     });
-    console.log(result);
     result.webhooks.forEach(webhook => {
       fetch(webhook.callback_url, {
         method: "POST",

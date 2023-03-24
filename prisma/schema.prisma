@@ -25,7 +25,7 @@ model Temperature {
   id        Int      @id @default(autoincrement())
   min       Int
   max       Int
-  city      City     @relation(fields: [city_id], references: [id])
+  city      City     @relation(fields: [city_id], references: [id], onDelete: Cascade)
   city_id   Int
   timestamp DateTime @default(now())
 
@@ -34,7 +34,7 @@ model Temperature {
 
 model Webhook {
   id           Int    @id @default(autoincrement())
-  city         City   @relation(fields: [city_id], references: [id])
+  city         City   @relation(fields: [city_id], references: [id], onDelete: Cascade)
   city_id      Int
   callback_url String
 
